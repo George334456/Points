@@ -6,8 +6,7 @@ import json
 # 3) Verbose is indeed verbose.
 def calculate(percentages, bracket, income):
     """
-    Calculate total tax given income and a configuration of percentages, and bracket.
-    Bracket is always 1 element less than percentages.
+    Calculate total tax given income and a configuration of percentages, and bracket
 
     percentages: A Python list that represents the amount of percent tax to be
     deducted on a specific tax bracket
@@ -21,22 +20,34 @@ def calculate(percentages, bracket, income):
     counter = 0
     tax = []
     for i,e in enumerate(bracket):
+        # Keep iterating until we are over the last bracket
         if income > e:
             income -= e
             tax.append(e * percentages[i])
         else:
+            # Early termination because we are in between brackets
             tax.append(income * percentages[i])
             return tax
+    # We've extended beyond all brackets, so calculate the remaining bracket.
     tax.append(percentages[-1] * income)
     return tax
 
 def extended_output(percentages, bracket, tax_amount, income):
     """
+    Calculate a formatted string to report back.
+
+    percentages: A Python list that represents the amount of percent tax to be
+    deducted on a specific tax bracket
+    bracket: A Python list representing the specific cut off point of a tax
+    bracket number.
+    income: An integer representing the income. 
+    
     Returns a prettier string of calculations.
     """
     answer = ""
     current_total = 0
     for i,e in enumerate(tax_amount):
+        # If the income extends beyond the last bracket, append properly.
         if i == len(tax_amount) - 1:
             answer += f"Income up to ${income:,.2f} taxed at {percentages[i]*100:.2f}%: ${tax_amount[i]:>10,.2f}\n"
         else:
@@ -60,7 +71,7 @@ if __name__ == '__main__':
     with open('config.json', 'r') as config:
         tax_values = json.load(config)
 
-    # Parse the JSON object to something better.
+    # Parse the JSON object to lists for better processing.
     percentages = []
     brackets = []
 

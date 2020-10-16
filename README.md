@@ -6,6 +6,7 @@ To quickly run this command, do `python3 calculate_tax.py <income>` where income
 
 ### Command line arguments
 `income`: The amount of gross income that you want to calcuate on.
+
 `--verbose`: To gain a more detailed report of how much you owe.
 
 For more information, check out `python3 calculate_tax.py --help`
